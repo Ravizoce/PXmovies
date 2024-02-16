@@ -1,17 +1,3 @@
-<template>
-  <div class="main_div bg-cover bg-fixed bg-no-repeat " :style="{ backgroundImage: 'url(' + BgImage + ')' }">
-    <navview id="navview" class="bg-gray-950 opacity-85" />
-    <div id="Router_vue">
-      <!-- <RouterView /> -->
-      <router-view v-slot="{ Component, route }">
-        <transition :name="route.meta.transition">
-          <component :is="Component" />
-        </transition>
-      </router-view>
-    </div>
-  </div>
-</template>
-
 <script setup>
 import { RouterView } from 'vue-router'
 import { useMovieStore } from './stores/movieapi';
@@ -49,9 +35,20 @@ const handleScroll = () => {
 const loadList = () => {
   movieStore.listsetter('movie', 'popular', '1');
 }
-
 </script>
-
+<template>
+  <div class="main_div bg-cover bg-fixed bg-no-repeat" :style="{ backgroundImage: 'url(' + BgImage + ')' }">
+    <navview id="navview" class="bg-gray-950 opacity-85" />
+    <div id="Router_vue">
+      <!-- <RouterView /> -->
+      <router-view v-slot="{ Component, route }">
+        <transition :name="route.meta.transition">
+          <component :is="Component" />
+        </transition>
+      </router-view>
+    </div>
+  </div>
+</template>
 <style scoped>
 nav {
   width: 100%;

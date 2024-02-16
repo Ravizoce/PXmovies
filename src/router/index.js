@@ -10,12 +10,9 @@ const router = createRouter({
       component: HomeView,
       props: route => ({ key: route.query.key || Date.now() }),
       meta: { transition: 'slide-left'},
-      redirect: to=>{
-        return { path:"/home"}
-      },
       children: [
         {
-          path: '/home',
+          path: '/',
           name: 'defaultlist',
           component: () => import('../components/HomeCard.vue'),
           props: route => ({ key: route.query.key || Date.now() }),

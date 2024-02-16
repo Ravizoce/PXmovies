@@ -13,9 +13,12 @@ var ListType = ref("popular");
 var ScreenType = ref("movie");
 
 onMounted(() => {
-  BGImageChanger('src/assets/bg.b54fb72f.jpg');
+  // BGImageChanger('src/assets/bg.b54fb72f.jpg');
   ListType.value = localStorage.getItem("ListType");
   ScreenType.value = localStorage.getItem("ScreenType");
+  if(ListType.value == 'popular'  && ScreenType.value == 'movie'){
+    movieStore.listsetter(ScreenType.value, ListType.value, 1);
+  }
 })
 
 watch([ListType, ScreenType], ([newListType, newScreenType]) => {

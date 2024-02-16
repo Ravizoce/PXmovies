@@ -20,8 +20,8 @@ const prop = defineProps({
 });
 
 onMounted(() => {
-    // movieStore.listsetter(prop.screen, prop.type, prop.page);
-    BGImageChanger('src/assets/bg.b54fb72f.jpg');
+    var base_url = window.location.origin;
+    BGImageChanger(base_url + '/src/assets/bg.b54fb72f.jpg');
     emit('pageEmitter', movieStore.Popular.page,)
 })
 

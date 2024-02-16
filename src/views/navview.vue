@@ -24,9 +24,9 @@ const defaultEr=()=>{
             <div
                 class="form rounded-xl text-black bg-white pr-2 pl-3 outline-offset-2 outline-blue-500 focus-within:outline focus-within:outline-2 flex flex-row items-center">
                 <input type="text" class="p-1 focus:outline-none" placeholder="Search By Title">
-                <span class="material-symbols-outlined">
+                <button class="material-symbols-outlined">
                     search
-                </span>
+                </button>
             </div>
         </div>
     </nav>
