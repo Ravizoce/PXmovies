@@ -9,7 +9,7 @@ const router = createRouter({
       name: 'home',
       component: HomeView,
       props: route => ({ key: route.query.key || Date.now() }),
-      meta: { transition: 'slide-left'},
+      meta: { transition: 'slide-left' },
       children: [
         {
           path: '/',
@@ -32,9 +32,14 @@ const router = createRouter({
       ]
     },
     {
-      path: '/about/:screen/:type/:id*',
+      path: '/about/:screen/:id*',
       name: 'about',
       props: true,
+      props: route => ({
+        screen: route.params.screen,
+        id: route.params.id || null,
+        key: route.query.key || Date.now()
+      }),
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.

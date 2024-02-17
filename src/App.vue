@@ -5,6 +5,7 @@ import navview from './views/navview.vue';
 import { BgImage } from './assets/Js/getGenres';
 import { onMounted } from 'vue';
 
+
 const movieStore = useMovieStore();
 onMounted(() => {
   window.addEventListener('scroll', handleScroll);
@@ -20,14 +21,14 @@ const handleScroll = () => {
   if (Nav) {
     const { top, bottom } = Vue.getBoundingClientRect();
     if (top <= -5) {
-      Nav.classList.remove('bg-gray-950');
-      Nav.classList.remove('opacity-85');
+      Nav.classList.remove('bg-gray-900');
+      Nav.classList.remove('bg-opacity-85');
       Nav.classList.add('bg-yellow-400');
     }
     else {
       Nav.classList.remove('bg-yellow-400');
-      Nav.classList.add('bg-gray-950');
-      Nav.classList.add('opacity-85');
+      Nav.classList.add('bg-gray-900');
+      Nav.classList.add('bg-opacity-85');
     }
   }
 }
@@ -38,7 +39,7 @@ const loadList = () => {
 </script>
 <template>
   <div class="main_div bg-cover bg-fixed bg-no-repeat" :style="{ backgroundImage: 'url(' + BgImage + ')' }">
-    <navview id="navview" class="bg-gray-950 opacity-85" />
+    <navview id="navview" class="bg-gray-900 bg-opacity-85" />
     <div id="Router_vue">
       <!-- <RouterView /> -->
       <router-view v-slot="{ Component, route }">
@@ -47,6 +48,23 @@ const loadList = () => {
         </transition>
       </router-view>
     </div>
+    <footer class="footer_wrapper flex flex-row h-fit">
+      <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+        <div class="md:flex md:justify-between">
+          <div class="md:mb-0 basis-0 flex justify-between">
+            <a href="#introduction" class="flex items-center w-fit">
+              <img class="w-10 h-10 mr-2" src="@/assets/icons/logo.png" alt="logo.png">
+              <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white w-fit">RPJ</span>
+            </a>
+          </div>
+        </div>
+        <div class="sm:flex sm:justify-center flex justify-center ">
+          <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 RPJ
+            All Rights Reserved . Inspired By <a class="hover:bg-transparent underline" href="https://developer.themoviedb.org/docs/getting-started">TMDB</a>.Created with VUE
+          </span>
+        </div>
+      </div>
+    </footer>
   </div>
 </template>
 <style scoped>

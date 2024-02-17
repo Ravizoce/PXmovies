@@ -35,8 +35,9 @@ const DetailUpdate = async (Id) => {
       <div
         class=" movie_detailes md:flex md:flex-row md:justify-between md:p-5 rounded-t-2xl bg-opacity-70 mt-5  bg-slate-800">
         <div class="left_side md:basis-[30%] grow">
-          <div class="poster p-2">
-            <img class="rounded-md" :src="'https://image.tmdb.org/t/p/w300/' + movie.MovieDetail.poster_path" alt="one"
+          <div class="poster p-2 text-[15px]">
+            <img class="rounded-md" :src="'https://image.tmdb.org/t/p/w300/' + movie.MovieDetail.poster_path"
+              :alt="movie.MovieDetail.original_title ? movie.MovieDetail.original_title : movie.MovieDetail.name"
               draggable="false">
           </div>
         </div>
@@ -121,13 +122,15 @@ const DetailUpdate = async (Id) => {
           Actors
         </h1>
       </div>
-      <div v-if="movie.CriditHolders.length === 0" class="placeholder-message text-black flex justify-start ml-6 text-[18px]">
+      <div v-if="movie.CriditHolders.length === 0"
+        class="placeholder-message text-black flex justify-start ml-6 text-[18px]">
         <strong>No credit holders found.</strong>
       </div>
       <div class="ridit_holders text-white grid grid-cols-5 justify-between p-3 ">
         <div class="cridit_holder_card bg-slate-700 m-2 w-fit" v-for="holder in movie.CriditHolders">
           <div class="top h-56 flex justify-center">
-            <img class=" h-52 w-40" :src="'https://image.tmdb.org/t/p/w300/' + holder.profile_path" :alt="holder.name + ' image'">
+            <img class=" h-52 w-40" :src="'https://image.tmdb.org/t/p/w300/' + holder.profile_path"
+              :alt="holder.name + ' image'">
           </div>
           <div class="buttom">
             <div class="name flex justify-center text-pretty">
@@ -155,9 +158,9 @@ const DetailUpdate = async (Id) => {
           <RouterLink @click="DetailUpdate(Recomendation.id)"
             :to="{ name: 'about', params: { id: Recomendation.id }, props: { id: Recomendation.id } }"
             class="hover:bg-black ">
-            <div class="poster_image mb-1 ">
+            <div class="poster_image mb-1 text-[15px]">
               <img class="rounded-md" :src="'https://image.tmdb.org/t/p/w300/' + Recomendation.poster_path"
-                alt="poster_image" draggable="false">
+                :alt="Recomendation.original_title ? Recomendation.original_title : Recomendation.name" draggable="false">
             </div>
             <div class="body">
               <div class="title_wrapper flex items-center mr-1 justify-around">

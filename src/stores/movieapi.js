@@ -12,27 +12,26 @@ export const useMovieStore = defineStore('useMovieStore', () => {
     }
 
     const Popular = ref({});
-    const Top_Rated = ref({});
-    const Now_Playiing = ref({});
-    const Upcomming = ref({});
+    const search = ref({});
+
     const genres = ref({})
     const MovieDetail = ref({});
     const MovieDetailImages = ref({});
     const CriditHolders = ref({});
     const Recomendations = ref({});
 
-    onMounted (async () => {
+    onMounted(async () => {
         try {
             let TdataGetter = await fetch(baseurl + "genre/tv/list" + key);
             let MdataGetter = await fetch(baseurl + "genre/movie/list" + key);
             let TjasonData = await TdataGetter.json();
             let MjasonData = await MdataGetter.json();
-            genres.value =  {movie:MjasonData , tv:TjasonData};
+            genres.value = { movie: MjasonData, tv: TjasonData };
         } catch (error) {
             console.error("error", error);
         }
     })
-    const listsetter = async (type, catagory,page) => {
+    const listsetter = async (type, catagory, page) => {
         try {
             let dataGetter = await fetch(baseurl + type + "/" + catagory + "?page=" + page.toString() + secondkey);
             let jsonData = await dataGetter.json();
@@ -46,11 +45,11 @@ export const useMovieStore = defineStore('useMovieStore', () => {
             let detailGetter = await fetch(baseurl + type + "/" + id + key);
             let jsonData = await detailGetter.json()
             MovieDetail.value = jsonData;
-            Imageloader(id , type);
-            Criditloader(id , type);
-            RecomendationsLoader(id , type);
+            Imageloader(id, type);
+            Criditloader(id, type);
+            RecomendationsLoader(id, type);
         }
-        catch(error) {
+        catch (error) {
             console.error("error", error);
         }
     }
@@ -60,7 +59,7 @@ export const useMovieStore = defineStore('useMovieStore', () => {
             let jsonData = await ImageGetter.json()
             MovieDetailImages.value = jsonData;
         }
-        catch(error) {
+        catch (error) {
             console.error("error", error);
         }
     }
@@ -69,24 +68,34 @@ export const useMovieStore = defineStore('useMovieStore', () => {
             let CriditGetter = await fetch(baseurl + type + "/" + id + "/credits" + key);
             let jsonData = await CriditGetter.json()
             let tempStore = await jsonData;
-            CriditHolders.value = await tempStore.cast.slice(0,10);
+            CriditHolders.value = await tempStore.cast.slice(0, 10);
         }
-        catch(error) {
+        catch (error) {
             console.error("error", error);
         }
     }
     const RecomendationsLoader = async (id, type) => {
         try {
-            let RecomendationsGetter = await fetch(baseurl + type + "/" + id + "/recommendations" + key);
+            let RecomendationsGetter = await fetch(baseurl + type + '/' + id + '/recommendations' + key);
             let jsonData = await RecomendationsGetter.json();
             Recomendations.value = jsonData;
         }
-        catch(error) {
+        catch (error) {
             console.error("error", error);
         }
     }
 
+    const SearchLoader = async (type , query) => {
+        try {
+            let SearchGetter = await fetch(baseurl + "search/" + type + '?query=' + query  + secondkey);
+            let jsonData = await SearchGetter.json();
+            search.value = jsonData;
+        }
+        catch (error) {
+            console.error("error", error);
+        }
+    }
     return {
-        Popular, genres,MovieDetail,MovieDetailImages,CriditHolders,Recomendations,listsetter, Detailsloader 
+        Popular,search,genres, MovieDetail, MovieDetailImages, CriditHolders, Recomendations, listsetter, Detailsloader,SearchLoader
     }
 })

@@ -1,11 +1,15 @@
 import { ref } from "vue";
 var BgImage = ref(''); 
 
+var search = ref('');
+
 const BGImageChanger = (value)=>{
-  console.log('bg set');
   BgImage.value = value;
 }
+const SearchUpdater = (value)=>{
+  search.value = value;
+}
 
-export {BgImage ,BGImageChanger};
+export {BgImage,search ,BGImageChanger,SearchUpdater};
 
 
