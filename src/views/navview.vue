@@ -115,7 +115,7 @@ const options = [
                 </div>
             </div>
             <div>
-               <Registration />
+
             </div>
         </div>
     </nav>

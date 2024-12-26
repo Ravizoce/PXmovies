@@ -2,6 +2,7 @@
 import { RouterView, useRoute } from 'vue-router';
 import { useMovieStore } from '@/stores/movieapi';
 import { BGImageChanger } from '@/assets/Js/getGenres';
+import bgImagePath from '@/assets/bg.b54fb72f.jpg';
 import { onMounted, ref, watch } from 'vue';
 
 
@@ -14,12 +15,11 @@ var ScreenType = ref("movie");
 
 onMounted(() => {
 
-  var base_url = window.location.origin;
-  BGImageChanger(base_url + '/src/assets/bg.b54fb72f.jpg');
+  BGImageChanger(bgImagePath);
 
   const route = useRoute();
-  ListType.value = localStorage.getItem("ListType");
-  ScreenType.value = localStorage.getItem("ScreenType");
+  ListType.value = localStorage.getItem("ListType") || "popular";
+  ScreenType.value = localStorage.getItem("ScreenType") || "movie";
   if (ListType.value == 'popular' && ScreenType.value == 'movie' && route.params.page == undefined && route.params.page == null) {
     movieStore.listsetter(ScreenType.value, ListType.value, "1");
   } else {
