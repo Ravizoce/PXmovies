@@ -1,5 +1,5 @@
 <script setup>
-import { RouterView } from 'vue-router';
+import { RouterView, useRoute } from 'vue-router';
 import { useMovieStore } from '@/stores/movieapi';
 import { BGImageChanger } from '@/assets/Js/getGenres';
 import { onMounted, ref, watch } from 'vue';
@@ -7,24 +7,27 @@ import { onMounted, ref, watch } from 'vue';
 
 const movieStore = useMovieStore();
 
-
+const route = useRoute();
 
 var ListType = ref("popular");
 var ScreenType = ref("movie");
 
 onMounted(() => {
-  // BGImageChanger('src/assets/bg.b54fb72f.jpg');
+  console.log("remount home");
+  const route = useRoute();
   ListType.value = localStorage.getItem("ListType");
   ScreenType.value = localStorage.getItem("ScreenType");
-  if(ListType.value == 'popular'  && ScreenType.value == 'movie'){
-    movieStore.listsetter(ScreenType.value, ListType.value, 1);
+  if (ListType.value == 'popular' && ScreenType.value == 'movie' && route.params.page == undefined && route.params.page == null) {
+    movieStore.listsetter(ScreenType.value, ListType.value, "1");
+  } else {
+    movieStore.listsetter(ScreenType.value, ListType.value, route.params.page);
   }
 })
 
 watch([ListType, ScreenType], ([newListType, newScreenType]) => {
   if (newScreenType == 'tv') {
     if (ListType.value == 'upcoming') {
-      movieStore.listsetter(newScreenType,'airing_today', 1);
+      movieStore.listsetter(newScreenType, 'airing_today', 1);
     }
     else if (ListType.value == 'now_playing') {
       movieStore.listsetter(newScreenType, 'on_the_air', 1);
@@ -48,7 +51,15 @@ const UpdateList = (pageination) => {
     behavior: "smooth" // Smooth scrolling
   });
 }
-var paginations = ref([1, 2, 3, 4, 5]);
+
+const Update_List = (page) => {
+  UpdateList(page);
+}
+var paginations = ref(() =>
+  (route.params.page <= 3 || route.params.page == undefined)   ? [1, 2, 3, 4, 5]
+    :
+    [route.params.page - 2, route.params.page - 1, route.params.page, route.params.page + 1, route.params.page + 2]
+);
 
 const paginationSetter = (page) => {
   if (page >= 3) {
@@ -103,7 +114,7 @@ const screens = [
     <div class="show_typ flex justify-between w-[85%] text-[20px] mt-2 mb-2 ">
       <div class="list_type_wrapper flex -space-x-px text-base border border-gray-700">
         <router-link v-for="list in Lists"
-          :to="{ name: 'Type_page_list', params: { screen: ScreenType, type: ListType, page: 1 }, props: { screen: ScreenType, type: ListType } }"
+          :to="{ name: 'list', params: { screen: ScreenType, type: ListType, page: 1 }, props: { screen: ScreenType, type: ListType } }"
           class="m-0">
           <div class="border border-gray-700 p-2 hover:bg-lime-500 cursor-pointer"
             :class="{ 'bg-orange-700': (list.Mtype == ListType || list.Ttype == ListType) }"
@@ -123,7 +134,7 @@ const screens = [
       </div> -->
       <div class=" flex flex-row -space-x-px text-base border border-gray-700">
         <router-link v-for="screen in screens"
-          :to="{ name: 'Type_page_list', params: { screen: ScreenType, type: ListType, page: 1 } }">
+          :to="{ name: 'list', params: { screen: ScreenType, type: ListType, page: 1 } }">
           <div class="border border-gray-700 p-2 hover:bg-lime-500 cursor-pointer"
             :class="{ 'bg-orange-700': (screen.type == ScreenType) }" @click="ScreenType = screen.type">
             {{ screen.name }}
@@ -152,16 +163,15 @@ const screens = [
               </svg>
             </RouterLink>
           </li>
-          <li v-for="       page        in        paginations       " class=" active:bg-green-500">
-            <RouterLink
-              :class="{ '!bg-gray-100 !text-gray-950 dark:!text-gray-950 dark:!bg-gray-100': page === movieStore.Popular.page }"
-              :to="{ name: 'list', params: { screen: ScreenType, type: ListType, page: page }, props: { page: page } }"
-              @click="UpdateList(page)"
+          <li v-for="       page in paginations       " class=" active:bg-green-500">
+            <RouterLink exactActiveClass="!bg-gray-100 !text-gray-950 dark:!text-gray-950 dark:!bg-gray-100"
+              :to="{ name: 'list', params: { screen: ScreenType, type: ListType, page: page } }"
+              @click="Update_List(page)"
               class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
               {{ page }}</RouterLink>
           </li>
           <li>
-            <RouterLink @click="UpdateList(++movieStore.Popular.page)"
+            <RouterLink @click="UpdateList(movieStore.Popular.page + 1)"
               :to="{ name: 'list', params: { screen: ScreenType, type: ListType, page: movieStore.Popular.page + 1 }, props: { page: movieStore.Popular.page } }"
               class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
               <span class="sr-only">Next</span>

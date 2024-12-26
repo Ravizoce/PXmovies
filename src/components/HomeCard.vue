@@ -22,7 +22,7 @@ const prop = defineProps({
 onMounted(() => {
     var base_url = window.location.origin;
     BGImageChanger(base_url + '/src/assets/bg.b54fb72f.jpg');
-    emit('pageEmitter', movieStore.Popular.page,)
+    // emit('pageEmitter', movieStore.Popular.page,)
 })
 
 watch(
@@ -44,7 +44,7 @@ watch(
             class="p-3 flex flex-wrap w-[22%] m-3 bg-black rounded-xl hover:bg-black hover:translate-y-[-5px] duration-100 ease-in-out">
             <RouterLink
                 :to="{ name: 'about', params: { screen: prop.screen, id: movie.id }, props: { screen: prop.screen, id: movie.id } }"
-                class="hover:bg-black">
+                class="hover:bg-black ">
                 <div class="poster_image mb-1 text-[15px]">
                     <img class="rounded-md" :src="'https://image.tmdb.org/t/p/w300/' + movie.poster_path" :alt="movie.original_title?movie.original_title:movie.name"
                         draggable="false">

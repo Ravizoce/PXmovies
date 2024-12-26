@@ -8,26 +8,19 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
-      props: route => ({ key: route.query.key || Date.now() }),
+      // props: route => ({ key: route.query.key || Date.now() }),
       meta: { transition: 'slide-left' },
       children: [
         {
-          path: '/',
+          path: '',
           name: 'defaultlist',
           component: () => import('../components/HomeCard.vue'),
-          props: route => ({ key: route.query.key || Date.now() }),
-        },
-        {
-          path: '/:screen/:type/:page',
-          name: 'Type_page_list',
-          component: () => import('../components/HomeCard.vue'),
-          props: true,
+          // props: route => ({ key: route.query.key || Date.now() }),
         },
         {
           path: '/:screen/:type/:page',
           name: 'list',
           component: () => import('../components/HomeCard.vue'),
-          props: true,
         },
       ]
     },
@@ -48,5 +41,6 @@ const router = createRouter({
     }
   ]
 })
+
 
 export default router
