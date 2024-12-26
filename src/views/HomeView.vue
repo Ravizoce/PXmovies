@@ -13,7 +13,10 @@ var ListType = ref("popular");
 var ScreenType = ref("movie");
 
 onMounted(() => {
-  console.log("remount home");
+
+  var base_url = window.location.origin;
+  BGImageChanger(base_url + '/src/assets/bg.b54fb72f.jpg');
+
   const route = useRoute();
   ListType.value = localStorage.getItem("ListType");
   ScreenType.value = localStorage.getItem("ScreenType");

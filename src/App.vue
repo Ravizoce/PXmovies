@@ -9,7 +9,7 @@ import LoadingScreen from './components/LoadongScreen/LoadingScreen.vue';
 
 const movieStore = useMovieStore();
 onMounted(() => {
-  console.log("App remount");
+
   window.addEventListener('scroll', handleScroll);
 })
 
