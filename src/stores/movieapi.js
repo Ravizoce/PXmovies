@@ -2,9 +2,10 @@ import { ref, onMounted } from "vue";
 import { defineStore } from "pinia";
 
 export const useMovieStore = defineStore('useMovieStore', () => {
+    const MainKey = 'b032f78175af43ac7d265e142f89f6cf';
     const baseurl = "https://api.themoviedb.org/3/";
-    const key = '?api_key=ec0570a570dbaabff94e6a689ff43c96';
-    const secondkey = '&api_key=ec0570a570dbaabff94e6a689ff43c96';
+    const key = '?api_key='+MainKey;
+    const secondkey = '&api_key='+MainKey;
 
     const type = {
         1: "movies",
